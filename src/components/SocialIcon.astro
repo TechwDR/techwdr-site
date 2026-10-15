@@ -1,0 +1,9 @@
+---
+import linkedin from '../icons/linkedin.svg?raw';
+import x from '../icons/x.svg?raw';
+import youtube from '../icons/youtube.svg?raw';
+import type { IconName } from '../types';
+interface Props { name: IconName }
+const svgs = { linkedin, x, youtube };
+---
+<span class="ico" set:html={svgs[Astro.props.name]} />

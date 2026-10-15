@@ -1,0 +1,14 @@
+---
+import { siteConfig } from '../config/site';
+import ExtLink from './ExtLink.astro';
+---
+<footer class="ftr">
+  <div class="wrap">
+    <nav class="ftr__nav" aria-label="Footer">
+      {siteConfig.social.map((s) => <ExtLink href={s.href} label={s.label}>{s.label}</ExtLink>)}
+      <a href="/privacy/">Privacy</a>
+    </nav>
+    <p id="ai-use" class="ftr__ai">AI helps me draft. I approve everything.</p>
+    <p class="ftr__copy">{siteConfig.copyright}</p>
+  </div>
+</footer>

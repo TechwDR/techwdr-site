@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { absoluteUrl } from '../utils/url';
+const schema = [{
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/', Astro.site) },
+    { '@type': 'ListItem', position: 2, name: 'Privacy', item: absoluteUrl('/privacy/', Astro.site) },
+  ],
+}];
+---
+<BaseLayout title="Privacy" description="How techwdr.com handles your data: no forms, no tracking, no analytics." schema={schema}>
+  <article class="sec">
+    <div class="wrap prose">
+      <h1>Privacy.</h1>
+      <p>This site is run by David Rice. It's a simple site: no forms, no accounts, no email signup, and nothing you type in is collected.</p>
+      <p><strong>Analytics and cookies.</strong> None. No tracking cookies, no third-party trackers, no LinkedIn Insight tag. If that changes, this page will be updated before it does.</p>
+      <p><strong>Hosting.</strong> The site is hosted by Netlify. Like any web host, Netlify's servers automatically receive technical data when you visit, such as your IP address, so the site can be delivered and protected. Netlify processes this data under its own terms and privacy statement, and it may use its own service providers and process data in the United States or other countries. I don't use this data to track or profile you.</p>
+      <p><strong>Selling data.</strong> I don't sell your personal data or share it for advertising.</p>
+      <p><strong>Links out.</strong> LinkedIn, X and YouTube each have their own privacy policy once you click through.</p>
+      <p><strong>Questions or requests.</strong> Email <a href="mailto:privacy@techwdr.com">privacy@techwdr.com</a>.</p>
+      {/* PLACEHOLDER: fill the "Last updated" date before launch (Counsel must also confirm the contact line and Links out). */}
+      <p>Last updated: [date].</p>
+    </div>
+  </article>
+</BaseLayout>
