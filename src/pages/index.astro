@@ -101,14 +101,19 @@ const themes = [
     <div class="wrap">
       <p class="kicker">Latest writing</p>
       <h2 id="writing-title">Notes from the field.</h2>
-      <ul class="cards">
-        {posts.map((p) => (
-          <li class="card">
-            <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 360px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
-            <h3>{p.title}</h3>
-            <ExtLink href={p.href} label={`Read on LinkedIn: ${p.title}`} class="lnk">Read on LinkedIn</ExtLink>
-          </li>
-        ))}
+      <ul class="cards cards--2">
+        {posts.map((p) => {
+          const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+          return (
+            <li class="card">
+              <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 440px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
+              <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+              <ExtLink href={p.href} label={`Read on ${p.platform.split(' ')[0]}: ${p.title}`} class="lnk">Read on {p.platform.split(' ')[0]}</ExtLink>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </section>

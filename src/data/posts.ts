@@ -1,7 +1,21 @@
-// PLACEHOLDER: David has not sent the three latest LinkedIn post titles and links yet.
-// Replace every title and href below before launch. `rg -n PLACEHOLDER dist/` must return nothing at go-live.
+// Latest writing cards (David's launch set, 2026-10-15). Newest first.
 export const posts = [
-  { title: 'PLACEHOLDER post title 1', href: 'https://www.linkedin.com/in/dave-rice/#PLACEHOLDER-post-1', image: '/images/cover-writing-1-sm.webp', image2x: '/images/cover-writing-1.webp' },
-  { title: 'PLACEHOLDER post title 2', href: 'https://www.linkedin.com/in/dave-rice/#PLACEHOLDER-post-2', image: '/images/cover-writing-2-sm.webp', image2x: '/images/cover-writing-2.webp' },
-  { title: 'PLACEHOLDER post title 3', href: 'https://www.linkedin.com/in/dave-rice/#PLACEHOLDER-post-3', image: '/images/cover-writing-3-sm.webp', image2x: '/images/cover-writing-3.webp' },
+  {
+    title: 'Speed to Report',
+    platform: 'X @TechwDR',
+    date: '2026-10-15',
+    href: 'https://x.com/TechwDR/status/2110721527406530759',
+    summary: 'In diligence, trust how fast people report a phishing test, not the click rate.',
+    image: '/images/cover-writing-2-sm.webp',
+    image2x: '/images/cover-writing-2.webp',
+  },
+  {
+    title: 'Agents Need Owners',
+    platform: 'LinkedIn',
+    date: '2026-10-14',
+    href: 'https://lnkd.in/p/ee3VYErW',
+    summary: 'Every AI agent that can act needs a named owner, a written scope and a tested off switch.',
+    image: '/images/cover-writing-1-sm.webp',
+    image2x: '/images/cover-writing-1.webp',
+  },
 ];

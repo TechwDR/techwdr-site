@@ -61,6 +61,10 @@ main:focus { outline: none; }
 .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1rem 1.25rem; }
 .card img { border-radius: 8px; margin-bottom: 1rem; }
 .card p { color: var(--sec); margin: 0; }
+.cards--2 { grid-template-columns: 1fr; max-width: 900px; }
+@media (min-width: 700px) { .cards--2 { grid-template-columns: repeat(2, 1fr); } }
+.card .card__meta { font: 500 .8rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .5rem; }
+.cards--2 .card p + .lnk { margin-top: .75rem; }
 .ai-img { position: relative; margin: 0; }
 .ai-badge { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; min-height: 24px; min-width: 24px;
   font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: #F8FAFC; text-decoration: none;
