@@ -1,0 +1,20 @@
+# David Rice (TechwDR)
+
+> David Rice is a Technology & People Leader and CISSP. On techwdr.com he writes for CIOs and tech leaders about AI governance, AI-era security and leading people through change, from the seat of the person who has to run it.
+
+TechwDR covers:
+- AI governance from the operator's seat
+- Cybersecurity in the AI era
+- Leading technology and global teams through change, people first
+
+## Key pages
+- [Home](https://www.techwdr.com/): who David is, what he writes and speaks about, and his latest writing
+- [Privacy](https://www.techwdr.com/privacy/): no forms, no tracking and no analytics on this site
+
+## Elsewhere
+- [LinkedIn](https://www.linkedin.com/in/dave-rice/)
+- [X](https://x.com/Techwdr)
+- [YouTube](https://www.youtube.com/@TechwDR)
+
+## Contact
+- Privacy questions: [privacy@techwdr.com](mailto:privacy@techwdr.com)
