@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExtLink from '../components/ExtLink.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import { siteConfig } from '../config/site';
+import { posts } from '../data/posts';
+import { absoluteUrl } from '../utils/url';
+
+const [li, x, yt] = siteConfig.social;
+const home = absoluteUrl('/', Astro.site);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${home}#profile`,
+    url: home,
+    isPartOf: { '@id': `${home}#website` },
+    mainEntity: {
+      '@type': 'Person',
+      '@id': `${home}#person`,
+      name: siteConfig.name,
+      jobTitle: siteConfig.jobTitle,
+      description: siteConfig.description,
+      image: absoluteUrl('/images/david-cutout@2x.webp', Astro.site),
+      url: home,
+      sameAs: siteConfig.social.map((s) => s.href),
+    },
+  },
+];
+const themes = [
+  { title: 'AI governance', text: "AI governance from the operator's seat.", src: '/images/theme-ai-governance.webp', srcset: '/images/theme-ai-governance.webp 1000w, /images/theme-ai-governance@2x.webp 2000w', alt: '', ai: false },
+  { title: 'AI-era security', text: 'Cybersecurity in the AI era, backed by CISSP.', src: '/images/theme-ai-security.webp', srcset: '/images/theme-ai-security.webp 1000w, /images/theme-ai-security@2x.webp 2000w', alt: '', ai: false },
+  { title: 'Leading teams', text: 'Leading technology and global teams through change, people first.', src: '/images/04-blue-shirt-theme-leading-teams-1000x656.webp', srcset: undefined, alt: 'AI-generated image of David Rice, seated at a meeting table in a blue overshirt', ai: true },
+];
+---
+<BaseLayout schema={schema} preloadImage={{ src: '/images/david-cutout.webp', srcset: '/images/david-cutout.webp 640w, /images/david-cutout@2x.webp 960w' }}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__in">
+      <div class="hero__txt">
+        <p class="kicker">I'm</p>
+        <h1 id="hero-title">David Rice</h1>
+        <p class="hero__role">Technology &amp; People Leader, CISSP</p>
+        <p class="lead">I write for CIOs and tech leaders about AI governance, security and leading people through change. AI from the seat of the person who has to run it.</p>
+        <div class="btns">
+          <ExtLink href={li.href} label="Connect on LinkedIn" class="btn btn--pri">Connect on LinkedIn</ExtLink>
+          <a class="lnk" href="#writing">Read the latest</a>
+        </div>
+        <ul class="icons" aria-label="Profiles">
+          {siteConfig.social.map((s) => <li><ExtLink href={s.href} label={s.label} class="icon-btn"><SocialIcon name={s.icon} /></ExtLink></li>)}
+        </ul>
+      </div>
+      <div class="hero__media">
+        <img src="/images/david-cutout.webp" srcset="/images/david-cutout.webp 640w, /images/david-cutout@2x.webp 960w" sizes="(min-width: 900px) 480px, 80vw" width="640" height="576" loading="eager" fetchpriority="high" decoding="async" alt="Portrait of David Rice in a navy suit and light blue shirt" />
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="Social profiles">
+    <ul class="wrap tiles">
+      {siteConfig.social.map((s) => (
+        <li><ExtLink href={s.href} label={`${s.label} ${s.handle}`} class="tile"><SocialIcon name={s.icon} /><span class="tile__l">{s.label}</span>{s.icon !== 'linkedin' && <span class="tile__h">{s.handle}</span>}</ExtLink></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="sec" aria-labelledby="bio-title">
+    <div class="wrap split">
+      <figure class="ai-img split__img">
+        <img src="/images/01-charcoal-zip-sweater-about-portrait-696x800.webp" width="696" height="800" loading="lazy" decoding="async" alt="AI-generated image of David Rice, in a charcoal zip sweater against a dark studio backdrop" />
+        <a class="ai-badge" href="#ai-use" aria-label="AI-generated image, see how I use AI">AI-generated</a>
+      </figure>
+      <div>
+        <p class="kicker">Who I am</p>
+        <h2 id="bio-title">Operator first. Still curious.</h2>
+        <p>I lead technology and global teams in Blue-Chip PE Backed Companies. Now AI sits in the middle of all of it.</p>
+        <p>I care about the governance, security and people work that makes AI hold up in the real world.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="themes-title">
+    <div class="wrap">
+      <h2 id="themes-title">What I write and speak about</h2>
+      <ul class="cards">
+        {themes.map((t) => (
+          <li class="card">
+            {t.ai ? (
+              <figure class="ai-img"><img src={t.src} width="1000" height="656" loading="lazy" decoding="async" alt={t.alt} /><a class="ai-badge" href="#ai-use" aria-label="AI-generated image, see how I use AI">AI-generated</a></figure>
+            ) : (
+              <img src={t.src} srcset={t.srcset} sizes="(min-width: 900px) 360px, 90vw" width="1000" height="656" loading="lazy" decoding="async" alt={t.alt} />
+            )}
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="writing" aria-labelledby="writing-title">
+    <div class="wrap">
+      <p class="kicker">Latest writing</p>
+      <h2 id="writing-title">Notes from the field.</h2>
+      <ul class="cards">
+        {posts.map((p) => (
+          <li class="card">
+            <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 360px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
+            <h3>{p.title}</h3>
+            <ExtLink href={p.href} label={`Read on LinkedIn: ${p.title}`} class="lnk">Read on LinkedIn</ExtLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec close" aria-labelledby="close-title">
+    <div class="wrap split">
+      <div>
+        <p class="kicker">Connect / Follow</p>
+        <h2 id="close-title">Say hello.</h2>
+        <p>Fellow technology leaders, board members and founders are all welcome.</p>
+        <div class="btns">
+          <ExtLink href={li.href} label={li.cta} class="btn btn--pri">{li.cta}</ExtLink>
+          <ExtLink href={x.href} label={x.cta} class="btn">{x.cta}</ExtLink>
+          <ExtLink href={yt.href} label={yt.cta} class="btn">{yt.cta}</ExtLink>
+        </div>
+      </div>
+      <img class="close__img" src="/images/portrait-closing.webp" srcset="/images/portrait-closing.webp 600w, /images/portrait-closing@2x.webp 900w" sizes="(min-width: 900px) 360px, 70vw" width="600" height="800" loading="lazy" decoding="async" alt="" />
+    </div>
+  </section>
+</BaseLayout>

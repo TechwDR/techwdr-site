@@ -1,0 +1,12 @@
+---
+import { siteConfig } from '../config/site';
+import ExtLink from './ExtLink.astro';
+import SocialIcon from './SocialIcon.astro';
+const li = siteConfig.social[0];
+---
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__brand" href="/">David Rice / TechwDR</a>
+    <ExtLink href={li.href} label="LinkedIn" class="hdr__li"><SocialIcon name="linkedin" /><span>LinkedIn</span></ExtLink>
+  </div>
+</header>
