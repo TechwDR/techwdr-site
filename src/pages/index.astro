@@ -30,10 +30,10 @@ const schema = [
 const themes = [
   { title: 'AI governance', text: "AI governance from the operator's seat.", src: '/images/theme-ai-governance.webp', srcset: '/images/theme-ai-governance.webp 1000w, /images/theme-ai-governance@2x.webp 2000w', alt: '', ai: false },
   { title: 'AI-era security', text: 'Cybersecurity in the AI era, backed by CISSP.', src: '/images/theme-ai-security.webp', srcset: '/images/theme-ai-security.webp 1000w, /images/theme-ai-security@2x.webp 2000w', alt: '', ai: false },
-  { title: 'Leading teams', text: 'Leading technology and global teams through change, people first.', src: '/images/04-blue-shirt-theme-leading-teams-1000x656.webp', srcset: undefined, alt: 'AI-generated image of David Rice, seated at a meeting table in a blue overshirt', ai: true },
+  { title: 'Leading teams', text: 'Leading technology and global teams through change, people first.', src: '/images/04-blue-shirt-theme-leading-teams-800w.webp', srcset: '/images/04-blue-shirt-theme-leading-teams-400w.webp 400w, /images/04-blue-shirt-theme-leading-teams-800w.webp 800w, /images/04-blue-shirt-theme-leading-teams-1000x656.webp 1000w', alt: 'AI-generated image of David Rice, seated at a meeting table in a blue overshirt', ai: true },
 ];
 ---
-<BaseLayout schema={schema} preloadImage={{ src: '/images/david-cutout.webp', srcset: '/images/david-cutout.webp 640w, /images/david-cutout@2x.webp 960w' }}>
+<BaseLayout schema={schema} preloadBg="/images/bg-grid.webp" preloadImage={{ src: '/images/david-cutout.webp', srcset: '/images/david-cutout.webp 640w, /images/david-cutout@2x.webp 960w' }}>
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero__in">
       <div class="hero__txt">
@@ -66,7 +66,7 @@ const themes = [
   <section class="sec" aria-labelledby="bio-title">
     <div class="wrap split">
       <figure class="ai-img split__img">
-        <img src="/images/01-charcoal-zip-sweater-about-portrait-696x800.webp" width="696" height="800" loading="lazy" decoding="async" alt="AI-generated image of David Rice, in a charcoal zip sweater against a dark studio backdrop" />
+        <img src="/images/01-charcoal-zip-sweater-about-portrait-696x800.webp" srcset="/images/01-charcoal-zip-sweater-about-portrait-400w.webp 400w, /images/01-charcoal-zip-sweater-about-portrait-696x800.webp 696w" sizes="(min-width: 900px) 45vw, 90vw" width="696" height="800" loading="lazy" decoding="async" alt="AI-generated image of David Rice, in a charcoal zip sweater against a dark studio backdrop" />
         <a class="ai-badge" href="#ai-use" aria-label="AI-generated image, see how I use AI">AI-generated</a>
       </figure>
       <div>
@@ -85,7 +85,7 @@ const themes = [
         {themes.map((t) => (
           <li class="card">
             {t.ai ? (
-              <figure class="ai-img"><img src={t.src} width="1000" height="656" loading="lazy" decoding="async" alt={t.alt} /><a class="ai-badge" href="#ai-use" aria-label="AI-generated image, see how I use AI">AI-generated</a></figure>
+              <figure class="ai-img"><img src={t.src} srcset={t.srcset} sizes="(min-width: 900px) 360px, 90vw" width="1000" height="656" loading="lazy" decoding="async" alt={t.alt} /><a class="ai-badge" href="#ai-use" aria-label="AI-generated image, see how I use AI">AI-generated</a></figure>
             ) : (
               <img src={t.src} srcset={t.srcset} sizes="(min-width: 900px) 360px, 90vw" width="1000" height="656" loading="lazy" decoding="async" alt={t.alt} />
             )}
@@ -101,14 +101,19 @@ const themes = [
     <div class="wrap">
       <p class="kicker">Latest writing</p>
       <h2 id="writing-title">Notes from the field.</h2>
-      <ul class="cards">
-        {posts.map((p) => (
-          <li class="card">
-            <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 360px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
-            <h3>{p.title}</h3>
-            <ExtLink href={p.href} label={`Read on LinkedIn: ${p.title}`} class="lnk">Read on LinkedIn</ExtLink>
-          </li>
-        ))}
+      <ul class="cards cards--2">
+        {posts.map((p) => {
+          const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+          return (
+            <li class="card">
+              <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 440px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
+              <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
+              <h3>{p.title}</h3>
+              <p>{p.summary}</p>
+              <ExtLink href={p.href} label={`Read on ${p.platform.split(' ')[0]}: ${p.title}`} class="lnk">Read on {p.platform.split(' ')[0]}</ExtLink>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </section>
