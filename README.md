@@ -1,6 +1,6 @@
 # techwdr-site
 
-Source for https://www.techwdr.com, the personal site of David Rice (TechwDR).
+Source for https://techwdr.com, the personal site of David Rice (TechwDR).
 
 ## Build
 
