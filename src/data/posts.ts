@@ -1,5 +1,14 @@
-// Latest writing cards (David's launch set, 2026-10-15). Newest first.
+// Latest writing cards, synced from posted-log 2026-10-16. Newest first.
 export const posts = [
+  {
+    title: 'Every Connector Is a Door',
+    platform: 'LinkedIn',
+    date: '2026-10-16',
+    href: 'https://www.linkedin.com/feed/update/urn:li:activity:7516899653494185984/',
+    summary: 'Treat anything your AI assistant reads through a connector as untrusted input. Writing, sending and deleting need a person in the loop.',
+    image: '/images/cover-writing-3-sm.webp',
+    image2x: '/images/cover-writing-3.webp',
+  },
   {
     title: 'Speed to Report',
     platform: 'X @TechwDR',
