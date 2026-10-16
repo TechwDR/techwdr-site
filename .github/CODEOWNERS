@@ -1,0 +1,8 @@
+# .github/CODEOWNERS for TechwDR/techwdr-site. Owner handle from Shield's gap list (2026-10-16).
+* @DRDEVTW
+/.github/ @DRDEVTW
+/netlify.toml @DRDEVTW
+/public/_headers @DRDEVTW
+/package.json @DRDEVTW
+/package-lock.json @DRDEVTW
+/.nvmrc @DRDEVTW
