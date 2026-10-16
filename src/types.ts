@@ -26,3 +26,12 @@ export interface SiteConfig {
     themeColor: string;
   };
 }
+
+export interface Short {
+  /** YouTube video id, e.g. "ay4dvk5JJHc" from youtube.com/shorts/ay4dvk5JJHc */
+  id: string;
+  title: string;
+  /** Upload date from YouTube (ISO 8601). */
+  date: string;
+  description: string;
+}

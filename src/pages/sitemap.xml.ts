@@ -3,6 +3,7 @@ import type { APIRoute } from 'astro';
 // Update lastmod when page content changes.
 const pages = [
   { path: '/', lastmod: '2026-10-15' },
+  { path: '/videos/', lastmod: '2026-10-15' },
   { path: '/privacy/', lastmod: '2026-10-15' },
 ];
 

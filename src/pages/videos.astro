@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ShortFacade from '../components/ShortFacade.astro';
+import { shorts, series } from '../data/videos';
+import { absoluteUrl } from '../utils/url';
+const page = absoluteUrl('/videos/', Astro.site);
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/', Astro.site) },
+      { '@type': 'ListItem', position: 2, name: 'Videos', item: page },
+    ],
+  },
+  ...shorts.map((v) => ({
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: v.title,
+    description: v.description,
+    thumbnailUrl: [`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`],
+    uploadDate: v.date,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${v.id}`,
+    contentUrl: `https://www.youtube.com/shorts/${v.id}`,
+  })),
+];
+---
+<BaseLayout title="Videos" description="Tech Takes @TechwDR: short videos from David Rice on AI governance, security and leading tech teams." schema={schema}>
+  <section class="sec" aria-labelledby="videos-title">
+    <div class="wrap">
+      <p class="kicker">YouTube Shorts</p>
+      <h1 id="videos-title">{series.name}</h1>
+      <p class="lead">Quick takes on AI, security and leading people through change. Tap a video to play it. Nothing loads from YouTube until you do.</p>
+      <p><a class="lnk" href={series.channel} rel="noopener">Watch more on YouTube @TechwDR</a></p>
+      <div class="shorts">
+        {shorts.map((v, i) => <ShortFacade video={v} priority={i === 0} />)}
+      </div>
+    </div>
+  </section>
+  <script is:inline src="/js/yt-facade.js" defer></script>
+</BaseLayout>
