@@ -1,0 +1,19 @@
+---
+import type { Short } from '../types';
+// priority: true only for the first Short (it is the LCP image on mobile); the rest lazy load.
+interface Props { video: Short; priority?: boolean }
+const { video, priority = false } = Astro.props;
+const watch = `https://www.youtube.com/shorts/${video.id}`;
+const thumb = `https://i.ytimg.com/vi_webp/${video.id}/hqdefault.webp`;
+const embed = `https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&playsinline=1`;
+const day = video.date.slice(0, 10);
+---
+<article class="short">
+  <a class="short__frame" href={watch} data-yt-embed={embed} data-yt-title={video.title} aria-label={`Play ${video.title}`}>
+    <img src={thumb} width="480" height="360" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} decoding="async" alt={`Thumbnail for the Short: ${video.title}`} />
+    <span class="short__play" aria-hidden="true"></span>
+  </a>
+  <h2 class="short__t">{video.title}</h2>
+  <p class="short__d"><time datetime={day}>{new Date(day + 'T12:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</time></p>
+  <p class="short__d">{video.description}</p>
+</article>

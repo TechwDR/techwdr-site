@@ -9,6 +9,7 @@ TechwDR covers:
 
 ## Key pages
 - [Home](https://techwdr.com/): who David is, what he writes and speaks about, and his latest writing
+- [Videos](https://techwdr.com/videos/): Tech Takes @TechwDR, David's YouTube Shorts series
 - [Privacy](https://techwdr.com/privacy/): no forms, no tracking and no analytics on this site
 
 ## Elsewhere
