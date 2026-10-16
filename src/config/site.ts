@@ -11,7 +11,7 @@ export const siteConfig: SiteConfig = {
   copyright: `© ${new Date().getFullYear()} David Rice (TechwDR). Site theme based on ST AI Agency, MIT © 2026 StrivioThemes.`,
   social: [
     { label: 'LinkedIn', handle: 'David Rice', href: 'https://www.linkedin.com/in/dave-rice/', icon: 'linkedin', cta: 'Connect on LinkedIn' },
-    { label: 'X', handle: '@Techwdr', href: 'https://x.com/Techwdr', icon: 'x', cta: 'Follow on X' },
+    { label: 'X', handle: '@TechwDR', href: 'https://x.com/Techwdr', icon: 'x', cta: 'Follow on X' },
     { label: 'YouTube', handle: '@TechwDR', href: 'https://www.youtube.com/@TechwDR', icon: 'youtube', cta: 'Watch on YouTube' },
   ],
   seo: {
@@ -19,7 +19,7 @@ export const siteConfig: SiteConfig = {
     defaultTitle: 'David Rice | Technology & People Leader',
     ogImage: '/images/og-image.jpg',
     ogImageAlt: 'David Rice, Technology & People Leader, techwdr.com',
-    twitterHandle: '@Techwdr',
+    twitterHandle: '@TechwDR',
     themeColor: '#0F172A',
   },
 };

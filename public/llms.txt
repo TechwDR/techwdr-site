@@ -8,8 +8,8 @@ TechwDR covers:
 - Leading technology and global teams through change, people first
 
 ## Key pages
-- [Home](https://www.techwdr.com/): who David is, what he writes and speaks about, and his latest writing
-- [Privacy](https://www.techwdr.com/privacy/): no forms, no tracking and no analytics on this site
+- [Home](https://techwdr.com/): who David is, what he writes and speaks about, and his latest writing
+- [Privacy](https://techwdr.com/privacy/): no forms, no tracking and no analytics on this site
 
 ## Elsewhere
 - [LinkedIn](https://www.linkedin.com/in/dave-rice/)
