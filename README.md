@@ -11,7 +11,7 @@ npm ci
 npm run build   # output in dist/
 ```
 
-No forms, no analytics, no third-party scripts or fonts. The pages ship as plain HTML and CSS with no client JavaScript.
+No forms, no analytics, no third-party scripts or fonts. The pages ship as plain HTML and CSS. There is one first-party script, /js/yt-facade.js, loaded only on /videos/ to swap a thumbnail for the YouTube player on click.
 
 ## Add a YouTube Short (Videos page)
 Add one line at the top of the `shorts` array in `src/data/videos.ts` (newest first):
