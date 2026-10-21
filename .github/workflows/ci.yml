@@ -1,0 +1,124 @@
+# .github/workflows/ci.yml for TechwDR/techwdr-site (repo type S). Prepared by Rivet 2026-10-16.
+# David commits this file (the bot token has no Workflows permission). Shield vets it before merge.
+# Actions pinned to full commit SHAs, verified 2026-10-16 via api.github.com/repos/<owner>/<repo>/git/ref/tags/<tag> and git ls-remote.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install gitleaks 8.30.1 (checksum-verified)
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          curl -sSfL -o gitleaks.tar.gz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf gitleaks.tar.gz gitleaks
+      - name: Scan full git history
+        run: ./gitleaks git . --no-banner --redact --exit-code 1
+
+  dependency-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=high
+
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # Typecheck: @astrojs/check and typescript are already devDependencies (package.json "check": "astro check").
+      - run: npm run check
+      # TODO lint: no linter in the repo. Adding eslint (+ eslint-plugin-astro, typescript-eslint) is a new
+      # dev dependency set and needs a Shield vet and David's OK before enabling.
+      # - run: npm run lint
+      # TODO tests: no "test" script yet. Enable when one exists (baseline 2.5).
+      # - run: npm test
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Content hygiene (no private address, handle casing)
+        run: |
+          fail=0
+          # Private address check by hash only, so the address never appears in this public file.
+          # PRIVATE_SHA256 = sha256 of the lowercased address (no trailing newline).
+          PRIVATE_SHA256=e7f8d0d4d0021484a440a5cd6af7e6677d8942983001eaacada72316b3d94bee
+          EMAIL_RE='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
+          emails=$( { git ls-files -z -- . ':!.github/workflows/ci.yml' | xargs -0 grep -hoIE "$EMAIL_RE" ; grep -rhoIE "$EMAIL_RE" dist ; } | tr 'A-Z' 'a-z' | sort -u )
+          for e in $emails; do
+            if [ "$(printf '%s' "$e" | sha256sum | cut -d' ' -f1)" = "$PRIVATE_SHA256" ]; then
+              echo "::error::private address found"
+              git grep -l -I -i -F -e "$e" -- . ':!.github/workflows/ci.yml' || true
+              grep -rlIiF -e "$e" dist || true
+              fail=1
+            fi
+          done
+          # @Techwdr (wrong case). The URL x.com/Techwdr has no @ and is allowed. CHANGELOG records the old fix.
+          if git grep -n -I '@Techwdr\b' -- . ':!CHANGELOG.md' ':!.github/workflows/ci.yml' ; then echo "::error::use @TechwDR"; fail=1; fi
+          if grep -rn '@Techwdr\b' dist ; then echo "::error::use @TechwDR in build output"; fail=1; fi
+          exit $fail
+      - name: Security headers / CSP present
+        run: |
+          h=public/_headers
+          for want in \
+            "Content-Security-Policy: default-src 'self'" \
+            "script-src 'self';" \
+            "frame-ancestors 'none'" \
+            "form-action 'none'" \
+            "object-src 'none'" \
+            "Strict-Transport-Security: max-age=31536000" \
+            "X-Content-Type-Options: nosniff" \
+            "X-Frame-Options: DENY" \
+            "Referrer-Policy: strict-origin-when-cross-origin" \
+            "Permissions-Policy:" ; do
+            grep -qF "$want" "$h" || { echo "::error::$h missing: $want"; exit 1; }
+          done
+          if grep -E "Content-Security-Policy:.*(unsafe-eval|script-src[^;]*unsafe-inline|\*)" "$h"; then
+            echo "::error::CSP weakened (unsafe-eval, inline script or wildcard)"; exit 1
+          fi
+          cmp -s "$h" dist/_headers || { echo "::error::dist/_headers differs from public/_headers"; exit 1; }
