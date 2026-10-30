@@ -1,8 +1,14 @@
 # .github/CODEOWNERS for TechwDR/techwdr-site. Owner handle from Shield's gap list (2026-10-16).
-* @DRDEVTW
+# Narrowed 2026-10-29 (David, crew-collab #31 and #35): Crew merges site content after CI passes; David reviews config, script and security files.
 /.github/ @DRDEVTW
 /netlify.toml @DRDEVTW
+/netlify/ @DRDEVTW
 /public/_headers @DRDEVTW
+/public/_redirects @DRDEVTW
+/public/js/ @DRDEVTW
 /package.json @DRDEVTW
 /package-lock.json @DRDEVTW
 /.nvmrc @DRDEVTW
+/astro.config.mjs @DRDEVTW
+/tsconfig.json @DRDEVTW
+
