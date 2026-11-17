@@ -7,6 +7,18 @@ import type { FeedPost, GroupedPost } from '../types';
 // Newer titles are candidate public wording from each post's live text, pending Proof.
 export const publishedPosts: FeedPost[] = [
   {
+    title: 'I made the 2026 MES Midmarket Marvels list.',
+    date: '2026-11-17',
+    platform: 'X',
+    href: 'https://x.com/TechwDR/status/2122728244176912750',
+  },
+  {
+    title: 'Yesterday Optimizely Web served malware to visitors of 178 organizations, including Zoom, the BBC, CNN and HSBC.',
+    date: '2026-11-17',
+    platform: 'X',
+    href: 'https://x.com/TechwDR/status/2122715898867781823',
+  },
+  {
     title: "You don't get a seat at the table. You earn it.",
     date: '2026-11-12',
     platform: 'X',
@@ -41,14 +53,14 @@ export const publishedPosts: FeedPost[] = [
     href: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7525932146671386624',
   },
   {
-    title: "Nov 5 I'm on the CIO Panel at #4CIOUSA",
+    title: "CIO Panel at 4CIO USA 2026 in Punta Cana",
     date: '2026-11-03',
     platform: 'X',
     href: 'https://x.com/TechwDR/status/2117630913219645586',
     group: '4cio-panel-2026-11-03',
   },
   {
-    title: "On Thursday, Nov 5, I'll be on the CIO Panel at 4CIO USA 2026 in Punta Cana.",
+    title: "CIO Panel at 4CIO USA 2026 in Punta Cana",
     date: '2026-11-03',
     platform: 'LinkedIn',
     href: 'https://www.linkedin.com/feed/update/urn:li:share:7523392058229940225',
