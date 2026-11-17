@@ -44,4 +44,18 @@ export interface FeedPost {
   href: string;
   /** Optional excerpt from the posted log. Omitted when the log has only a title. */
   blurb?: string;
+  /** Shared key for an X and LinkedIn item that are the same post. */
+  group?: string;
+}
+
+export interface PostLink {
+  platform: 'LinkedIn' | 'X';
+  href: string;
+}
+
+export interface GroupedPost {
+  title: string;
+  date: string;
+  blurb?: string;
+  links: PostLink[];
 }

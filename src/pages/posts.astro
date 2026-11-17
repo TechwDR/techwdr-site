@@ -40,10 +40,14 @@ const schema = [
             const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
             return (
               <li class="card">
-                <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
+                <p class="card__meta">{p.links.map((l) => l.platform).join(' · ')} · <time datetime={p.date}>{when}</time></p>
                 <h2>{p.title}</h2>
                 {p.blurb && <p>{p.blurb}</p>}
-                <ExtLink href={p.href} label={`Read on ${p.platform}: ${p.title}`} class="lnk">Read on {p.platform}</ExtLink>
+                <p class="card__links">
+                  {p.links.map((l) => (
+                    <ExtLink href={l.href} label={`Read on ${l.platform}: ${p.title}`} class="lnk">Read on {l.platform}</ExtLink>
+                  ))}
+                </p>
               </li>
             );
           })}

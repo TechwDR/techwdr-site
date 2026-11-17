@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ExtLink from '../components/ExtLink.astro';
 import SocialIcon from '../components/SocialIcon.astro';
 import { siteConfig } from '../config/site';
-import { latestPosts } from '../data/published-posts';
+import { latestPosts, primaryHref, platformsLabel } from '../data/published-posts';
 import { absoluteUrl } from '../utils/url';
 
 const [li, x, yt] = siteConfig.social;
@@ -104,12 +104,14 @@ const themes = [
       <ul class="cards cards--4">
         {latestPosts(4).map((p) => {
           const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+          const href = primaryHref(p);
+          const platform = p.links.find((l) => l.href === href)?.platform ?? p.links[0].platform;
           return (
             <li class="card">
-              <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
+              <p class="card__meta">{platformsLabel(p)} · <time datetime={p.date}>{when}</time></p>
               <h3>{p.title}</h3>
               {p.blurb && <p>{p.blurb}</p>}
-              <ExtLink href={p.href} label={`Read on ${p.platform}: ${p.title}`} class="lnk">Read on {p.platform}</ExtLink>
+              <ExtLink href={href} label={`Read on ${platform}: ${p.title}`} class="lnk">Read on {platform}</ExtLink>
             </li>
           );
         })}

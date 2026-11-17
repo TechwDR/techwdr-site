@@ -1,32 +1,37 @@
-import type { FeedPost } from '../types';
+import type { FeedPost, GroupedPost } from '../types';
 
 // Live LinkedIn and X posts with a public URL, taken from posted-log.md.
 // Titles and excerpts are the logged wording, trimmed. Newest first;
 // same-day items are ordered by the logged time, later posts first.
+// `group` marks an X and LinkedIn item that are the same post.
 export const publishedPosts: FeedPost[] = [
   {
     title: 'Echoes / seat-at-the-table',
     date: '2026-11-12',
     platform: 'X',
     href: 'https://x.com/TechwDR/status/2120960576864088182',
+    group: 'echoes-2026-11-12',
   },
   {
     title: 'Echoes / seat-at-the-table',
     date: '2026-11-12',
     platform: 'LinkedIn',
     href: 'https://www.linkedin.com/feed/update/urn:li:share:7526724751981981697',
+    group: 'echoes-2026-11-12',
   },
   {
     title: 'Cursor marketplace PSA',
     date: '2026-11-11',
     platform: 'LinkedIn',
     href: 'https://www.linkedin.com/feed/update/urn:li:share:7526295936659099648',
+    group: 'cursor-psa-2026-11-11',
   },
   {
     title: 'Cursor marketplace PSA',
     date: '2026-11-11',
     platform: 'X',
     href: 'https://x.com/2109984593315053569/status/2120527219160191244',
+    group: 'cursor-psa-2026-11-11',
   },
   {
     title: 'ep2 native video',
@@ -39,12 +44,14 @@ export const publishedPosts: FeedPost[] = [
     date: '2026-11-03',
     platform: 'X',
     href: 'https://x.com/2109984593315053569/status/2117630913219645586',
+    group: '4cio-panel-2026-11-03',
   },
   {
     title: '4CIO USA CIO Panel announcement',
     date: '2026-11-03',
     platform: 'LinkedIn',
     href: 'https://www.linkedin.com/feed/update/urn:li:share:7523392058229940225',
+    group: '4cio-panel-2026-11-03',
   },
   {
     title: 'SC1 supply-chain post',
@@ -130,13 +137,47 @@ function addCalendarDays(isoDate: string, days: number): string {
   return utc.toISOString().slice(0, 10);
 }
 
-// The 30-day window is computed at build time because the site is static.
-export function postsInLastDays(days: number, now = new Date()): FeedPost[] {
-  const today = calendarDateInArizona(now);
-  const cutoff = addCalendarDays(today, -days);
-  return publishedPosts.filter((post) => post.date >= cutoff);
+function groupKey(post: FeedPost): string {
+  return post.group ?? `${post.date}::${post.title}`;
 }
 
-export function latestPosts(count: number): FeedPost[] {
-  return publishedPosts.slice(0, count);
+export function groupPosts(posts: FeedPost[]): GroupedPost[] {
+  const groups = new Map<string, GroupedPost>();
+  const order: string[] = [];
+  for (const post of posts) {
+    const key = groupKey(post);
+    let group = groups.get(key);
+    if (!group) {
+      group = { title: post.title, date: post.date, blurb: post.blurb, links: [] };
+      groups.set(key, group);
+      order.push(key);
+    }
+    if (!group.links.some((link) => link.platform === post.platform)) {
+      group.links.push({ platform: post.platform, href: post.href });
+    }
+  }
+  for (const group of groups.values()) {
+    group.links.sort((a, b) => Number(b.platform === 'LinkedIn') - Number(a.platform === 'LinkedIn'));
+  }
+  return order.map((key) => groups.get(key)!);
+}
+
+/** LinkedIn when present, otherwise X. */
+export function primaryHref(post: GroupedPost): string {
+  return post.links.find((link) => link.platform === 'LinkedIn')?.href ?? post.links[0]?.href ?? '';
+}
+
+export function platformsLabel(post: GroupedPost): string {
+  return post.links.map((link) => link.platform).join(' · ');
+}
+
+// The 30-day window is computed at build time because the site is static.
+export function postsInLastDays(days: number, now = new Date()): GroupedPost[] {
+  const today = calendarDateInArizona(now);
+  const cutoff = addCalendarDays(today, -days);
+  return groupPosts(publishedPosts.filter((post) => post.date >= cutoff));
+}
+
+export function latestPosts(count: number): GroupedPost[] {
+  return groupPosts(publishedPosts).slice(0, count);
 }

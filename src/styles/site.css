@@ -69,6 +69,7 @@ main:focus { outline: none; }
 @media (min-width: 900px) { .cards--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; } }
 .card .card__meta { font: 500 .8rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .5rem; }
 .cards--2 .card p + .lnk, .cards--4 .card p + .lnk, .cards--4 .card h3 + .lnk { margin-top: .75rem; }
+.card__links { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: .75rem; }
 .ai-img { position: relative; margin: 0; }
 .ai-badge { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; min-height: 24px; min-width: 24px;
   font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: #F8FAFC; text-decoration: none;
