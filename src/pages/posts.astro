@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExtLink from '../components/ExtLink.astro';
+import { publishedPosts } from '../data/published-posts';
+import { absoluteUrl } from '../utils/url';
+
+const page = absoluteUrl('/posts/', Astro.site);
+const description = 'Posts from @TechwDR: writing by tech leader David Rice on AI governance, security and leading people through change.';
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: absoluteUrl('/', Astro.site) },
+      { '@type': 'ListItem', position: 2, name: 'Posts', item: page },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Posts',
+    url: page,
+    description,
+  },
+];
+---
+<BaseLayout title="Posts" description={description} schema={schema}>
+  <section class="sec" aria-labelledby="posts-title">
+    <div class="wrap">
+      <p class="kicker">From @TechwDR</p>
+      <h1 id="posts-title">Posts</h1>
+      <p class="lead">Notes on AI, security and leading people through change, posted on LinkedIn and X.</p>
+      <ul class="cards cards--2">
+        {publishedPosts.map((p) => {
+          const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+          return (
+            <li class="card">
+              <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
+              <h2>{p.title}</h2>
+              <p>{p.blurb}</p>
+              <ExtLink href={p.href} label={`Read on ${p.platform}: ${p.title}`} class="lnk">Read on {p.platform}</ExtLink>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

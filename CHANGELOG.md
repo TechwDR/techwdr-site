@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-17
+- Add Posts page (/posts/) with the eight Proof-passed items from the 2026-10-21 copy (titles, dates, platforms, URLs and blurbs unchanged). Header Posts link, sitemap and llms.txt entries.
+
+
 ## 2026-10-16
 - Repo security baseline (RS1 A): added .github/CODEOWNERS (@DRDEVTW), .github/dependabot.yml (npm + GitHub Actions, weekly, grouped) and SECURITY.md (private vulnerability reporting or privacy@techwdr.com). .gitignore now covers .env.* (except .env.example), *.pem and *.key. The CI workflow is committed separately by David.
 - Latest writing: added the live LinkedIn post Every Connector Is a Door (2026-10-16) as the first card. Copy from Signal's brief (/home/box/bench/signal/2026-10-16-techwdr-site-update-brief.md); links only to David's post. Home sitemap lastmod 2026-10-16.

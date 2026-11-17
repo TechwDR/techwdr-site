@@ -9,6 +9,7 @@ TechwDR covers:
 
 ## Key pages
 - [Home](https://techwdr.com/): who David is, what he writes and speaks about, and his latest writing
+- [Posts](https://techwdr.com/posts/): writing from @TechwDR on LinkedIn and X
 - [Videos](https://techwdr.com/videos/): Tech Takes @TechwDR, David's YouTube Shorts series
 - [Privacy](https://techwdr.com/privacy/): no forms and no analytics. The /videos/ page loads video thumbnails from YouTube's image server (i.ytimg.com), which can see your IP address and browser details, and only after you press Play does it load a YouTube player from youtube-nocookie.com, which may set cookies under YouTube's privacy policy (https://policies.google.com/privacy).
 

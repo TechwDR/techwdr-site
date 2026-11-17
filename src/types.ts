@@ -35,3 +35,12 @@ export interface Short {
   date: string;
   description: string;
 }
+
+export interface FeedPost {
+  title: string;
+  /** Calendar date of the live post (YYYY-MM-DD, Arizona). */
+  date: string;
+  platform: 'LinkedIn' | 'X';
+  href: string;
+  blurb: string;
+}
