@@ -42,5 +42,6 @@ export interface FeedPost {
   date: string;
   platform: 'LinkedIn' | 'X';
   href: string;
-  blurb: string;
+  /** Optional excerpt from the posted log. Omitted when the log has only a title. */
+  blurb?: string;
 }

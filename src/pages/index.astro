@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ExtLink from '../components/ExtLink.astro';
 import SocialIcon from '../components/SocialIcon.astro';
 import { siteConfig } from '../config/site';
-import { posts } from '../data/posts';
+import { latestPosts } from '../data/published-posts';
 import { absoluteUrl } from '../utils/url';
 
 const [li, x, yt] = siteConfig.social;
@@ -101,16 +101,15 @@ const themes = [
     <div class="wrap">
       <p class="kicker">Latest writing</p>
       <h2 id="writing-title">Notes from the field.</h2>
-      <ul class="cards cards--2">
-        {posts.map((p) => {
+      <ul class="cards cards--4">
+        {latestPosts(4).map((p) => {
           const when = new Date(`${p.date}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
           return (
             <li class="card">
-              <img src={p.image} srcset={`${p.image} 600w, ${p.image2x} 1200w`} sizes="(min-width: 900px) 440px, 90vw" width="600" height="375" loading="lazy" decoding="async" alt="" />
               <p class="card__meta">{p.platform} · <time datetime={p.date}>{when}</time></p>
               <h3>{p.title}</h3>
-              <p>{p.summary}</p>
-              <ExtLink href={p.href} label={`Read on ${p.platform.split(' ')[0]}: ${p.title}`} class="lnk">Read on {p.platform.split(' ')[0]}</ExtLink>
+              {p.blurb && <p>{p.blurb}</p>}
+              <ExtLink href={p.href} label={`Read on ${p.platform}: ${p.title}`} class="lnk">Read on {p.platform}</ExtLink>
             </li>
           );
         })}
