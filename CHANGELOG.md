@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2026-11-17
+- /posts now lists live LinkedIn and X posts from the posted log, limited to the last 30 days at build time. The home "Notes from the field." section shows the latest four in one row on desktop. src/data/posts.ts is unused and left in place.
+- Home "Notes from the field." and /posts now treat a same-day LinkedIn and X item with the same title as one post (home links to LinkedIn, then X; /posts shows both links on one row).
 - Add Posts page (/posts/) with the eight Proof-passed items from the 2026-10-21 copy (titles, dates, platforms, URLs and blurbs unchanged). Header Posts link, sitemap and llms.txt entries.
 
 
